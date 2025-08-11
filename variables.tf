@@ -1,5 +1,5 @@
 variable "user" {
-    description = "User for tagging resources"
+    description = "User of resources"
     type        = string
 }
 
