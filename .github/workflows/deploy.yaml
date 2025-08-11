@@ -17,6 +17,9 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v3
 
+            - name: List root files (debugging)
+              run: ls -la
+
             - name: Set up Terraform
               uses: hashicorp/setup-terraform@v2
 
