@@ -29,6 +29,6 @@ variable "vpc_cidr_block" {
 
 variable "availability_zones" {
     description = "List of availability zones for the VPC"
-    type = lis(string)
+    type = list(string)
 
 }
