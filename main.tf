@@ -6,6 +6,7 @@ module "vpc" {
     vpc_cidr_block = var.vpc_cidr_block
     public_subnet_cidr_block = var.public_subnet_cidr_block
     private_subnet_cidr_block = var.private_subnet_cidr_block
+    security_group = "web_sg"
 
 
     }
@@ -15,7 +16,7 @@ module "vpc" {
 
         instance_type = var.instance_type
         key_name = var.key_name
-        ami_id = var.instance_ami_id
+        instance_ami = var.instance_ami
         public_subnet_ids = module.vpc.public_subnet_ids
         private_subnet_ids = module.vpc.private_subnet_ids
         security_group_ids = [module.vpc.web_sg_id]

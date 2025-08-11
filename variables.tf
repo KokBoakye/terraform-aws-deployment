@@ -27,6 +27,24 @@ variable "vpc_cidr_block" {
 
 }
 
+variable "instance_ami" {
+    description = "AMI ID for the EC2 instances"
+    type        = map(string)
+    
+}
+
+variable "instance_type" {
+    description = "Instance type for the EC2 instances"
+    type        = list(string)
+    
+}
+
+variable "key_name" {
+    description = "Key name for the EC2 instances"
+    type        = string
+    
+}
+
 # variable "availability_zones" {
 #     description = "List of availability zones for the VPC"
 #     type = list(string)
