@@ -21,7 +21,7 @@ module "vpc" {
         vpc_id = module.vpc.vpc_id
     }
 
-     module "security_group"{
+     module "security-group"{
         source = "git::https://github.com/KokBoakye/terraform-aws-modules.git//modules/security_group?ref=main"
 
         app_port = var.app_port
