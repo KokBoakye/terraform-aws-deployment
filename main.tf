@@ -19,7 +19,7 @@ module "vpc" {
         instance_ami = var.instance_ami
         public_subnet_ids = module.vpc.public_subnet_ids
         private_subnet_ids = module.vpc.private_subnet_ids
-        security_group_ids = [module.vpc.web_sg_id]
+        security_group = module.security-group.web_sg_id
         vpc_id = module.vpc.vpc_id
     }
 
