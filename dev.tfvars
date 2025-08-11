@@ -11,3 +11,4 @@ instance_ami = {
 }
 key_name = "Mendy" 
 instance_type = ["t3.micro", "t3.medium", "t3.large"]
+app_port = 8080

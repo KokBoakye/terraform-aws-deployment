@@ -45,6 +45,12 @@ variable "key_name" {
     
 }
 
+variable "app_port" {
+    description = "Application port for backend (for App SG)"
+    type        = number
+    
+}
+
 # variable "availability_zones" {
 #     description = "List of availability zones for the VPC"
 #     type = list(string)
