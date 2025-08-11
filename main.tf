@@ -16,7 +16,8 @@ module "vpc" {
         instance_type = var.instance_type
         key_name = var.key_name
         ami_id = var.instance_ami_id
-        subnet_id = module.vpc.public_subnet_id
+        public_subnet_ids = module.vpc.public_subnet_ids
+        private_subnet_ids = module.vpc.private_subnet_ids
         security_group_ids = [module.vpc.web_sg_id]
         vpc_id = module.vpc.vpc_id
     }
