@@ -6,7 +6,7 @@ module "vpc" {
     vpc_cidr_block = var.vpc_cidr_block
     public_subnet_cidr_block = var.public_subnet_cidr_block
     private_subnet_cidr_block = var.private_subnet_cidr_block
-
+    web_server_instance_ids = module.ec2.web_server_instance_ids
 
 
     }
@@ -21,6 +21,7 @@ module "vpc" {
         private_subnet_ids = module.vpc.private_subnet_ids
         security_group = module.security-group.web_sg_id
         vpc_id = module.vpc.vpc_id
+        
     }
 
      module "security-group" {
