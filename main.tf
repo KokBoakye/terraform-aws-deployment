@@ -24,7 +24,7 @@ module "vpc" {
         vpc_id = module.vpc.vpc_id
         bastion_security_group = module.security-group.bastion_sg_id
         web_security_group = module.security-group.web_sg_id
-        private_security_group = module.security-group.app_sg_id
+        private_security_group = [module.security-group.app_sg_id]
         
     }
 
