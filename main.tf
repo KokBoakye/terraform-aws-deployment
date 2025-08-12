@@ -22,6 +22,7 @@ module "vpc" {
         private_subnet_ids = module.vpc.private_subnet_ids
         security_group = module.security-group.web_sg_id
         vpc_id = module.vpc.vpc_id
+        bastion_security_group = module.security-group.bastion_sg_id
         
     }
 
