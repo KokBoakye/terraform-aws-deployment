@@ -47,5 +47,8 @@ jobs:
                 TF_LOG: DEBUG
               run: terraform apply -auto-approve -var-file=dev.tfvars
                 
-            - name: Terraform Output
+            - name: Terraform Total Output
               run: terraform state list
+
+            - name: Terraform Output - Selected
+              run: terraform output
