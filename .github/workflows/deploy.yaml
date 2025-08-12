@@ -42,10 +42,10 @@ jobs:
             - name: Terraform Destroy              
               run: terraform destroy -auto-approve -var-file=dev.tfvars
 
-            - name: Terraform Apply
-              env:
-                TF_LOG: DEBUG
-              run: terraform apply -auto-approve -var-file=dev.tfvars
+            # - name: Terraform Apply
+            #   env:
+            #     TF_LOG: DEBUG
+            #   run: terraform apply -auto-approve -var-file=dev.tfvars
                 
-            - name: Terraform Output
-              run: terraform state list
+            # - name: Terraform Output
+            #   run: terraform state list
