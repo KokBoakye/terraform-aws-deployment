@@ -23,6 +23,8 @@ module "vpc" {
         security_group = module.security-group.web_sg_id
         vpc_id = module.vpc.vpc_id
         bastion_security_group = module.security-group.bastion_sg_id
+        web_security_group = module.security-group.web_sg_id
+        private_security_group = module.security-group.private_sg_id
         
     }
 
