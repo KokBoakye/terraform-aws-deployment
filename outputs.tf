@@ -13,3 +13,8 @@ output "public_ips" {
   description = "Public IPs of the EC2 instances"
   value       = module.ec2.public_ip
 }
+
+output "bastion_host_public_ip" {
+  description = "Public IP of the bastion host"
+  value       = module.ec2.bastion_host_public_ip
+}
