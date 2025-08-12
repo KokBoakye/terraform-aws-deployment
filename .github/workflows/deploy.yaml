@@ -30,7 +30,7 @@ jobs:
                 aws-region: eu-north-1
 
             - name: Build Docker image
-              run: docker build -t myflaskapp .
+              run: docker build -t myflaskapp ./App/flask_app
 
             - name: Authenticate to Amazon ECR
               run: |
