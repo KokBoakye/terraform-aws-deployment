@@ -26,6 +26,7 @@ module "vpc" {
         web_security_group = module.security-group.web_sg_id
         private_security_group = [module.security-group.app_sg_id]
         db_private_security_group = [module.security-group.db_sg_id]
+        private_db_subnet_group = [module.vpc.private_db_subnet_group_id]
         
     }
 
