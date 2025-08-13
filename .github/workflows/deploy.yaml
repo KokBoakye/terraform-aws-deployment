@@ -1,4 +1,4 @@
-name: Deploy_ Infrastructure
+name: Deploy_Infrastructure
 
 on:
     push:
