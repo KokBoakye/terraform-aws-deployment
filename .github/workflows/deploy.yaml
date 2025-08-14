@@ -3,7 +3,7 @@ name: Deploy - Infrastructure
 on:
     push:
         branches:
-            - dev
+            - main
     # workflow_dispatch:
     #   inputs:
     #     action:
