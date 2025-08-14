@@ -38,19 +38,22 @@ jobs:
                 role-to-assume: arn:aws:iam::914559461558:role/GithubActions
                 aws-region: eu-north-1
 
-            - name: Build Docker image
-              run: docker build -t myflaskapp ./App/flask_app
+            - name: Build Flask Docker image
+             run: docker build -t myflaskapp ./App/flask_app
 
-            - name: Authenticate to Amazon ECR
+            - name: Build Nginx Docker image
+              run: docker build -t mynginx ./App/flask_app/nginx
+
+            - name: Tag & Push Flask
               run: |
-                aws ecr get-login-password --region eu-north-1 \
-                  | docker login --username AWS --password-stdin 914559461558.dkr.ecr.eu-north-1.amazonaws.com
+                docker tag myflaskapp:latest 914559461558.dkr.ecr.eu-north-1.amazonaws.com/myflaskapp:latest
+                docker push 914559461558.dkr.ecr.eu-north-1.amazonaws.com/myflaskapp:latest
 
-            - name: Tag Docker image
-              run: docker tag myflaskapp:latest 914559461558.dkr.ecr.eu-north-1.amazonaws.com/myflaskapp:latest
+            - name: Tag & Push Nginx
+              run: |
+                docker tag mynginx:latest 914559461558.dkr.ecr.eu-north-1.amazonaws.com/mynginx:latest
+                docker push 914559461558.dkr.ecr.eu-north-1.amazonaws.com/mynginx:latest
 
-            - name: Push Docker image to ECR
-              run: docker push 914559461558.dkr.ecr.eu-north-1.amazonaws.com/myflaskapp:latest
 
         
             - name: Terraform Init
