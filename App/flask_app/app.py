@@ -1,28 +1,27 @@
-from flask import Flask
+from flask import Flask, render_template
 import psycopg2
 import os
 
 app = Flask(__name__)
 
 def get_db_connection():
-    conn = psycopg2.connect(
+    return psycopg2.connect(
         host=os.getenv('DB_HOST'),
-        database=os.getenv('DB_NAME', 'appdb'),
+        database=os.getenv('DB_NAME'),
         user=os.getenv('DB_USER'),
         password=os.getenv('DB_PASSWORD'),
         sslmode='require'
     )
-    return conn
 
 @app.route('/')
 def index():
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute('SELECT NOW();')
-    time = cur.fetchone()
+    cur.execute('SELECT id, name, email FROM users;')
+    users = cur.fetchall()
     cur.close()
     conn.close()
-    return f'Hello from Flask! DB time is {time[0]}'
+    return render_template('users.html', users=users)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
