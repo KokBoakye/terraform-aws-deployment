@@ -8,8 +8,8 @@ def get_db_connection():
     conn = psycopg2.connect(
         host=os.getenv('DB_HOST'),
         database='appdb',
-        user='appuser',
-        password='apppassword'
+        user=os.getenv('DB_USER'),
+        password=os.getenv('DB_PASSWORD'),
     )
     return conn
 
@@ -24,4 +24,4 @@ def index():
     return f'Hello from Flask! DB time is {time[0]}'
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=5000)
