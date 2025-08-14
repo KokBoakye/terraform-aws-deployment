@@ -38,8 +38,14 @@ jobs:
                 role-to-assume: arn:aws:iam::914559461558:role/GithubActions
                 aws-region: eu-north-1
 
+            - name: Authenticate to Amazon ECR
+              run: |
+                aws ecr get-login-password --region eu-north-1 \
+                  | docker login --username AWS --password-stdin 914559461558.dkr.ecr.eu-north-1.amazonaws.com
+
+
             - name: Build Flask Docker image
-             run: docker build -t myflaskapp ./App/flask_app
+              run: docker build -t myflaskapp ./App/flask_app
 
             - name: Build Nginx Docker image
               run: docker build -t mynginx ./App/flask_app/nginx
