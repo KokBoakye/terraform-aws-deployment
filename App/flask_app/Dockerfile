@@ -13,12 +13,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the app source code
 COPY . .
 
-# Expose the port Flask runs on
-EXPOSE 5000
+# Expose the port Gunicorn will run on
+EXPOSE 8000
 
-# Environment variable to tell Flask the app entry point
-ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
-
-# Run the Flask app
-CMD ["flask", "run"]
+# Run the app with Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app:app"]
