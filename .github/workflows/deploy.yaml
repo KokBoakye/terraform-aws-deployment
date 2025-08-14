@@ -4,6 +4,16 @@ on:
     push:
         branches:
             - main
+    workflow_dispatch:
+      inputs:
+        action:
+            description: 'Select action to perform'
+            required: true
+            default: 'apply'
+            type: choice
+            options:
+                - apply
+                - destroy
 
 jobs:
     terraform:
@@ -52,10 +62,12 @@ jobs:
             - name: Terraform Plan
               run: terraform plan -var-file=dev.tfvars
 
-            - name: Terraform Destroy              
+            - name: Terraform Destroy 
+              if: ${{ github.event.inputs.action == 'destroy' }}             
               run: terraform destroy -auto-approve -var-file=dev.tfvars
 
             - name: Terraform Apply
+              if: ${{ github.event.inputs.action == 'apply' }}
               env:
                 TF_LOG: DEBUG
               run: terraform apply -auto-approve -var-file=dev.tfvars
