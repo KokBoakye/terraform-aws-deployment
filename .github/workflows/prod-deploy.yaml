@@ -1,19 +1,19 @@
 name: Deploy - Prod - Infrastructure
 
 on:
-    # push:
-    #     branches:
-    #         - prod
-  workflow_dispatch:
-    inputs:
-      action:
-          description: 'Select action to perform'
-          required: true
-          default: 'apply'
-          type: choice
-          options:
-              - apply
-              - destroy
+    push:
+        branches:
+            - prod
+    workflow_dispatch:
+      inputs:
+        action:
+            description: 'Select action to perform'
+            required: true
+            default: 'apply'
+            type: choice
+            options:
+                - apply
+                - destroy
 
 jobs:
     terraform:
