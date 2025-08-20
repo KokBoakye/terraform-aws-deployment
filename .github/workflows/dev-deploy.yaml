@@ -4,16 +4,16 @@ on:
     push:
         branches:
             - dev
-    # workflow_dispatch:
-    #   inputs:
-    #     action:
-    #         description: 'Select action to perform'
-    #         required: true
-    #         default: 'apply'
-    #         type: choice
-    #         options:
-    #             - apply
-    #             - destroy
+    workflow_dispatch:
+      inputs:
+        action:
+            description: 'Select action to perform'
+            required: true
+            default: 'apply'
+            type: choice
+            options:
+                - apply
+                - destroy
 
 jobs:
     terraform:
