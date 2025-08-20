@@ -40,11 +40,11 @@ jobs:
 
             - name: Create s3 bucket for backend
               run: |
-                 aws s3api create-bucket --bucket prod-tf-state-bucket-11-08-2025 --region eu-north-1
-            
+                 aws s3api create-bucket \
+                  --bucket prod-tf-state-bucket-11-08-2025 \
+                  --region eu-north-1 \
+                  --create-bucket-configuration LocationConstraint=eu-north-1 
            
-
-
             - name: Terraform Init
               run: terraform init
 
