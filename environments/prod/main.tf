@@ -25,7 +25,7 @@ module "ec2" {
 }
 
 module "security-group" {
-    source = "https://github.com/KokBoakye/terraform-aws-modules//modules/vpc?ref=main"
+    source = "https://github.com/KokBoakye/terraform-aws-modules//modules/security-group?ref=main"
     region = var.aws_region
     vpc_id = module.vpc.vpc_id
     app_port = var.app_port
