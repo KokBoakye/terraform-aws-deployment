@@ -46,7 +46,9 @@ jobs:
                       --region eu-north-1 \
                       --create-bucket-configuration LocationConstraint=eu-north-1
 
-           
+            - name: Delete cached terraform modules
+              run: rm -rf .terraform/modules
+
             - name: Terraform Init
               run: terraform -chdir=environments/prod init -backend-config="bucket=prod-tf-state-bucket-11-08-2025"
 
