@@ -1,0 +1,19 @@
+version: 2
+updates:
+  # Python dependencies
+  - package-ecosystem: "pip"
+    directory: "/App/flask_app"
+    schedule:
+      interval: "weekly"
+
+  # Docker images
+  - package-ecosystem: "docker"
+    directory: "/App/flask_app"
+    schedule:
+      interval: "weekly"
+
+  # Terraform modules/providers
+  - package-ecosystem: "terraform"
+    directory: "/"
+    schedule:
+      interval: "weekly"

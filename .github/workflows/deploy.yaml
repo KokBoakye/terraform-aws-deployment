@@ -1,0 +1,87 @@
+name: Deploy - Infrastructure
+
+on:
+    push:
+        branches:
+            - dev
+    # workflow_dispatch:
+    #   inputs:
+    #     action:
+    #         description: 'Select action to perform'
+    #         required: true
+    #         default: 'apply'
+    #         type: choice
+    #         options:
+    #             - apply
+    #             - destroy
+
+jobs:
+    terraform:
+        runs-on: ubuntu-latest
+
+        permissions:
+            contents: read
+            id-token: write
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            
+
+            - name: Set up Terraform
+              uses: hashicorp/setup-terraform@v2
+
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v4
+              with:
+                role-to-assume: arn:aws:iam::914559461558:role/GithubActions
+                aws-region: eu-north-1
+
+            - name: Authenticate to Amazon ECR
+              run: |
+                aws ecr get-login-password --region eu-north-1 \
+                  | docker login --username AWS --password-stdin 914559461558.dkr.ecr.eu-north-1.amazonaws.com
+
+
+            - name: Build Flask Docker image
+              run: docker build -t myflaskapp ./App/flask_app
+
+            - name: Build Nginx Docker image
+              run: docker build -t mynginx ./App/flask_app/nginx
+
+            - name: Tag & Push Flask
+              run: |
+                docker tag myflaskapp:latest 914559461558.dkr.ecr.eu-north-1.amazonaws.com/myflaskapp:latest
+                docker push 914559461558.dkr.ecr.eu-north-1.amazonaws.com/myflaskapp:latest
+
+            - name: Tag & Push Nginx
+              run: |
+                docker tag mynginx:latest 914559461558.dkr.ecr.eu-north-1.amazonaws.com/mynginx:latest
+                docker push 914559461558.dkr.ecr.eu-north-1.amazonaws.com/mynginx:latest
+
+
+        
+            - name: Terraform Init
+              run: terraform init
+
+            - name: Terraform Validate
+              run: terraform validate
+
+            - name: Terraform Plan
+              run: terraform plan -var-file=dev.tfvars
+
+            - name: Terraform -Destroy 
+              # if: ${{ github.event.inputs.action == 'destroy' }}             
+              run: terraform destroy -auto-approve -var-file=dev.tfvars
+
+            # - name: Terraform Apply
+            #   # if: ${{ github.event.inputs.action == 'apply' }}
+            #   env:
+            #     TF_LOG: DEBUG
+            #   run: terraform apply -auto-approve -var-file=dev.tfvars
+                
+            # - name: Terraform Total Output
+            #   run: terraform state list
+
+           
