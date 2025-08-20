@@ -1,58 +1,50 @@
 variable "user" {
-    description = "User of resources"
-    type        = string
+  description = "The user to create the access key for"
+  type        = string
 }
 
-variable "private_subnet_cidr_block" {
-    description = "CIDR block for the subnets"
-    type = list(string)
-    
+variable "aws_region" {
+    description = "Region where resources will be deployed"
+    type = string
 }
 
 variable "public_subnet_cidr_block" {
-    description = "CIDR block for the subnets"
-    type = list(string)
-    
+    description = "Cidr block for public subnet"
+    type = string
 }
 
-variable "environment" {
-    description = "Environment for the AWS resources"
+variable "private_subnet_cidr_block" {
+    description = "Cidr block for private subnet"
     type = list(string)
-
 }
 
 variable "vpc_cidr_block" {
-    description = "CIDR block for the VPC"
+    description = "Cidr block for vpc"
     type = string
+}
 
+variable "environment" {
+    description = "working environment"
+    type = string
 }
 
 variable "instance_ami" {
-    description = "AMI ID for the EC2 instances"
-    type        = map(string)
-    
+    description = "ami of ec2 instance"
+    type = string
 }
 
 variable "instance_type" {
-    description = "Instance type for the EC2 instances"
-    type        = list(string)
-    
+    description = "type of ec2 instance"
+    type = list(string)
 }
 
 variable "key_name" {
-    description = "Key name for the EC2 instances"
-    type        = string
-    
+    description = "key pair"
+    type = string
+  
 }
 
 variable "app_port" {
-    description = "Application port for backend (for App SG)"
-    type        = number
-    
+    description = "port for application"
+    type = number
 }
-
-# variable "availability_zones" {
-#     description = "List of availability zones for the VPC"
-#     type = list(string)
-
-# }
