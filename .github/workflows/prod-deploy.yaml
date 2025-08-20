@@ -1,19 +1,19 @@
 name: Deploy - Prod - Infrastructure
 
 on:
-    push:
-        branches:
-            - prod
-    # workflow_dispatch:
-    #   inputs:
-    #     action:
-    #         description: 'Select action to perform'
-    #         required: true
-    #         default: 'apply'
-    #         type: choice
-    #         options:
-    #             - apply
-    #             - destroy
+    # push:
+    #     branches:
+    #         - prod
+  workflow_dispatch:
+    inputs:
+      action:
+          description: 'Select action to perform'
+          required: true
+          default: 'apply'
+          type: choice
+          options:
+              - apply
+              - destroy
 
 jobs:
     terraform:
@@ -40,31 +40,37 @@ jobs:
 
             - name: Create s3 bucket for backend
               run: |
-                 aws s3api create-bucket --bucket prod-tf-state-bucket-11-08-2025 --region eu-north-1
-            
-           
+                 aws s3api head-bucket --bucket prod-tf-state-bucket-11-08-2025 2>/dev/null || \
+                  aws s3api create-bucket \
+                      --bucket prod-tf-state-bucket-11-08-2025 \
+                      --region eu-north-1 \
+                      --create-bucket-configuration LocationConstraint=eu-north-1
 
+            - name: Delete cached terraform modules
+              run: rm -rf .terraform/modules
 
             - name: Terraform Init
-              run: terraform init
+              run: terraform -chdir=environments/prod init -backend-config="bucket=prod-tf-state-bucket-11-08-2025"
 
             - name: Terraform Validate
               run: terraform validate
 
             - name: Terraform Plan
-              run: terraform plan -var-file=./environments/prod.tfvars
+              run: terraform -chdir=environments/prod plan -var-file=prod.tfvars
 
             - name: Terraform -Destroy 
-              # if: ${{ github.event.inputs.action == 'destroy' }}             
-              run: terraform destroy -auto-approve -var-file=dev.tfvars
+              if: ${{ github.event.inputs.action == 'destroy' }}             
+              run: terraform -chdir=environments/prod destroy --auto-approve -var-file=prod.tfvars
+
 
             - name: Terraform Apply
-              # if: ${{ github.event.inputs.action == 'apply' }}
+              if: ${{ github.event.inputs.action == 'apply' }}
               env:
                 TF_LOG: DEBUG
-              run: terraform apply -auto-approve -var-file=dev.tfvars
+              run: terraform -chdir=environments/prod apply --auto-approve -var-file=prod.tfvars
+
                 
             - name: Terraform Total Output
-              run: terraform state list
+              run: terraform -chdir=environments/prod state list
 
            
