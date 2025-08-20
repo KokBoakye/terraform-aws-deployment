@@ -67,7 +67,7 @@ jobs:
               # if: ${{ github.event.inputs.action == 'apply' }}
               env:
                 TF_LOG: DEBUG
-              run: terraform -chdir=environments/prod destroy --auto-approve -var-file=prod.tfvars
+              run: terraform -chdir=environments/prod apply --auto-approve -var-file=prod.tfvars
 
                 
             - name: Terraform Total Output
