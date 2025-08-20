@@ -1,0 +1,70 @@
+name: Deploy - Prod - Infrastructure
+
+on:
+    push:
+        branches:
+            - prod
+    # workflow_dispatch:
+    #   inputs:
+    #     action:
+    #         description: 'Select action to perform'
+    #         required: true
+    #         default: 'apply'
+    #         type: choice
+    #         options:
+    #             - apply
+    #             - destroy
+
+jobs:
+    terraform:
+        runs-on: ubuntu-latest
+
+        permissions:
+            contents: read
+            id-token: write
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            
+
+            - name: Set up Terraform
+              uses: hashicorp/setup-terraform@v2
+
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v4
+              with:
+                role-to-assume: arn:aws:iam::604312263409:role/githubuser
+                aws-region: eu-north-1
+
+            - name: Create s3 bucket for backend
+              run: |
+                 aws s3api create-bucket --bucket prod-tf-state-bucket-11-08-2025 --region eu-north-1
+            
+           
+
+
+            - name: Terraform Init
+              run: terraform init
+
+            - name: Terraform Validate
+              run: terraform validate
+
+            - name: Terraform Plan
+              run: terraform plan -var-file=./environments/prod.tfvars
+
+            - name: Terraform -Destroy 
+              # if: ${{ github.event.inputs.action == 'destroy' }}             
+              run: terraform destroy -auto-approve -var-file=dev.tfvars
+
+            - name: Terraform Apply
+              # if: ${{ github.event.inputs.action == 'apply' }}
+              env:
+                TF_LOG: DEBUG
+              run: terraform apply -auto-approve -var-file=dev.tfvars
+                
+            - name: Terraform Total Output
+              run: terraform state list
+
+           
