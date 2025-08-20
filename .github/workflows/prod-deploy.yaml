@@ -71,6 +71,6 @@ jobs:
 
                 
             - name: Terraform Total Output
-              run: terraform state list
+              run: terraform -chdir=environments/prod state list
 
            
