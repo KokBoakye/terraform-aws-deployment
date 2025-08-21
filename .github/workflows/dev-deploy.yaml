@@ -1,4 +1,4 @@
-name: Deploy - Dev - Infrastructure
+name: Deploy - Dev -  Infrastructure
 
 on:
     push:
@@ -56,7 +56,9 @@ jobs:
               run: terraform validate
 
             - name: Terraform Plan
-              run: terraform -chdir=environments/dev plan -var-file=dev.tfvars
+              run: |
+                export TF_LOG=DEBUG 
+                terraform -chdir=environments/dev plan -var-file=dev.tfvars
 
             - name: Terraform -Destroy 
               if: ${{ github.event.inputs.action == 'destroy' }}             
