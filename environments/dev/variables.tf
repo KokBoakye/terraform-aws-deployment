@@ -28,10 +28,7 @@ variable "environment" {
     type = string
 }
 
-# variable "instance_ami" {
-#     description = "ami of ec2 instance"
-#     type = string
-# }
+
 
 variable "instance_type" {
     description = "type of ec2 instance"

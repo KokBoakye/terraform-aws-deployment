@@ -5,6 +5,6 @@ public_subnet_cidr_block = "10.1.0.0/24"
 key_name = "Mendy"
 private_subnet_cidr_block = [ "10.1.1.0/24", "10.1.2.0/24" ]
 aws_region = "eu-north-1"
-# instance_ami = "ami-042b4708b1d05f512" #"ami-0becc523130ac9d5d"
+
 instance_type = ["t3.micro", "t3.large"]
 app_port = 8080
