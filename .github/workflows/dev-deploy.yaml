@@ -57,7 +57,7 @@ jobs:
 
             - name: Terraform Plan
               run: |
-                expoprt TF_LOG=DEBUG 
+                export TF_LOG=DEBUG 
                 terraform -chdir=environments/dev plan -var-file=dev.tfvars
 
             - name: Terraform -Destroy 
