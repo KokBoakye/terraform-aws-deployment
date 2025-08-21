@@ -8,7 +8,7 @@ module "vpc" {
     public_subnet_cidr_block = var.public_subnet_cidr_block
     user = var.user
     alb_sg = module.security-group.alb_sg_id
-    instance_id = module.ec2.instance_id
+    instance_id = module.ec2.instance_id[*]
 
 }
 
