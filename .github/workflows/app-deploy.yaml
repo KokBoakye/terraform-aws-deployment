@@ -1,4 +1,4 @@
-name: Deploy - Infrastructure
+name: Deploy - App
 
 on:
     push:
@@ -7,7 +7,7 @@ on:
  
 
 jobs:
-    terraform:
+    Docker-buil-push:
         runs-on: ubuntu-latest
 
         permissions:
@@ -32,8 +32,14 @@ jobs:
             - name: Authenticate to Amazon ECR
               run: |
                 aws ecr get-login-password --region eu-north-1 \
-                  | docker login --username AWS --password-stdin 914559461558.dkr.ecr.eu-north-1.amazonaws.com
+                  | docker login --username AWS --password-stdin 604312263409.dkr.ecr.eu-north-1.amazonaws.com
 
+            - name: Create ECR repos
+              run: |
+                for repo in myflaskapp mynginx; do
+                  aws ecr describe-repositories --repository-names $repo --region eu-north-1 >/dev/null 2>&1 || \
+                  aws ecr create-repository --repository-name $repo --region eu-north-1
+                done 
 
             - name: Build Flask Docker image
               run: docker build -t myflaskapp ./App/flask_app
@@ -43,13 +49,13 @@ jobs:
 
             - name: Tag & Push Flask
               run: |
-                docker tag myflaskapp:latest 914559461558.dkr.ecr.eu-north-1.amazonaws.com/myflaskapp:latest
-                docker push 914559461558.dkr.ecr.eu-north-1.amazonaws.com/myflaskapp:latest
+                docker tag myflaskapp:latest 604312263409.dkr.ecr.eu-north-1.amazonaws.com/myflaskapp:latest
+                docker push 604312263409.dkr.ecr.eu-north-1.amazonaws.com/myflaskapp:latest
 
             - name: Tag & Push Nginx
               run: |
-                docker tag mynginx:latest 914559461558.dkr.ecr.eu-north-1.amazonaws.com/mynginx:latest
-                docker push 914559461558.dkr.ecr.eu-north-1.amazonaws.com/mynginx:latest
+                docker tag mynginx:latest 604312263409.dkr.ecr.eu-north-1.amazonaws.com/mynginx:latest
+                docker push 604312263409.dkr.ecr.eu-north-1.amazonaws.com/mynginx:latest
 
 
         
