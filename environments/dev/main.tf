@@ -20,7 +20,7 @@ module "ec2" {
     private_subnet_ids = module.vpc.private_subnet_ids
     user = var.user
     instance_type = var.instance_type[*]
-    instance_ami = var.instance_ami
+    # instance_ami = var.instance_ami
     key_name = var.key_name
     security_group = module.security-group.web_sg_id
    
