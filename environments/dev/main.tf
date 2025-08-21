@@ -21,7 +21,8 @@ module "ec2" {
     user = var.user
     instance_type = var.instance_type[*]    
     key_name = var.key_name
-    security_group = module.security-group.web_sg_id
+    web_sg = module.security-group.web_sg_id
+    app_sg = module.security-group.app_sg_id
    
 }
 
