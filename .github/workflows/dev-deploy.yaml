@@ -1,4 +1,4 @@
-name: Deploy - Dev - Infrastructure
+name: Deploy - Dev -  Infrastructure
 
 on:
     push:
@@ -47,13 +47,16 @@ jobs:
                       --create-bucket-configuration LocationConstraint=eu-north-1
 
             - name: Delete cached terraform modules
-              run: rm -rf .terraform/modules
+              run: | 
+               rm -rf .terraform/modules
+               terraform get -update
 
-            - name: Terraform Init
+            - name: Terraform  Init
               run: terraform -chdir=environments/dev init -backend-config="bucket=dev-tf-state-bucket-11-08-2025"
 
             - name: Terraform Validate
               run: terraform validate
+                
 
             - name: Terraform Plan
               run: |
