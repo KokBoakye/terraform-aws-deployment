@@ -5,7 +5,7 @@ module "vpc" {
     aws_region = var.aws_region
     vpc_cidr_block = var.vpc_cidr_block
     private_subnet_cidr_block = var.private_subnet_cidr_block[*]
-    public_subnet_cidr_block = var.public_subnet_cidr_block
+    public_subnet_cidr_block = var.public_subnet_cidr_block[*]
     user = var.user
     
 
@@ -22,7 +22,7 @@ module "ec2" {
     user = var.user
     instance_type = var.instance_type[*]    
     key_name = var.key_name
-    web_sg = module.security-group.web_sg_id
+    bastion_sg = module.security-group.bastion_sg_id
     app_sg = module.security-group.app_sg_id
    
 }
@@ -41,7 +41,7 @@ resource "aws_lb" "app_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [module.security-group.alb_sg_id]
-  subnets           = [module.vpc.public_subnet_ids]
+  subnets           = module.vpc.public_subnet_ids
 }
 
 resource "aws_lb_target_group" "app_tg" {
