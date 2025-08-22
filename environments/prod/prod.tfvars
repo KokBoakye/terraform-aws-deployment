@@ -1,5 +1,5 @@
 user = "Kwabena"
-environment = "prod" #"prod"
+environment = "prod" 
 vpc_cidr_block = "10.0.0.0/16"
 public_subnet_cidr_block = "10.0.2.0/24"
 key_name = "Mendy"
