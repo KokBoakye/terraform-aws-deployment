@@ -10,7 +10,7 @@ variable "aws_region" {
 
 variable "public_subnet_cidr_block" {
     description = "Cidr block for public subnet"
-    type = string
+    type = list(string)
 }
 
 variable "private_subnet_cidr_block" {
