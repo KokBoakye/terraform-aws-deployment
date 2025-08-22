@@ -1,25 +1,14 @@
-# output "vpc_id" {
-#   description = "ID of the_VPC"
-#   value       = module.vpc.vpc_id
-  
-# }
+output "alb_dns_name" {
+  description = "DNS name of the load balancer"
+  value       = aws_lb.app_alb.dns_name
+}
 
-# output "web_server_instance_ids" {
-#   description = "IDs of the EC2 instances"
-#   value       = module.ec2.web_server_instance_ids
-# }
+output "bastion_host_public_ip" {
+    description = "public_ip of bastion host"
+    value = module.ec2.public_ip
+}
 
-# output "public_ips" {
-#   description = "Public IPs of the EC2 instances"
-#   value       = module.ec2.public_ip
-# }
-
-# # output "bastion_host_public_ip" {
-# #   description = "Public IP of the bastion host"
-# #   value       = module.ec2.bastion_host_public_ip
-# # }
-
-# output "rds_endpoint" {
-#   description = "Endpoint of the RDS instance"
-#   value       = module.ec2.db_endpoint
-# }#
+output "private_server_private_ip" {
+    description = "private ip of server in private subnet"
+    value = module.private_ec2.private_ip
+}
