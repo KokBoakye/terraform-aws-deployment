@@ -40,7 +40,7 @@ resource "aws_lb" "app_alb" {
   name               = "${var.environment}-${var.user}-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = module.security-group.alb_sg_id
+  security_groups    = [module.security-group.alb_sg_id]
   subnets           = module.vpc.public_subnet_ids
 }
 
