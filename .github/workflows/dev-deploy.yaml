@@ -48,7 +48,7 @@ jobs:
 
             - name: Delete cached terraform modules
               run: | 
-               rm -rf .terraform/modules
+               rm -rf .terraform terraform.tfstate terraform.tfstate.backup
                terraform get -update
 
             - name: Terraform  Init
