@@ -10,5 +10,5 @@ output "bastion_host_public_ip" {
 
 output "private_server_private_ip" {
     description = "private ip of server in private subnet"
-    value = module.private_ec2.private_ip
+    value = module.ec2.private_ip
 }
